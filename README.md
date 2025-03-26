@@ -1,4 +1,8 @@
 nfs
+1. apt install nfs-kernel-server
+2. /etc/exports
+3. /storage/office * (rw,sync,no_subtree_check)
+4. exportfs -ra
 
 pam
 1. apt install libpam-mount
