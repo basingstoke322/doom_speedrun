@@ -23,8 +23,10 @@ while true
    fi
  done
 ```
+crontab @reboot /script_path
 
 # ca
+https://sgolubev.ru/openssl-ca/  
 1. mkdir certs keys newcerts db
 2. touch db/index.txt
 3. echo 1000 > db/serial
@@ -32,4 +34,14 @@ while true
 5. comment engines section
 6. edit names
 7. edit paths
-8. openssl req -new -x509 -keyout cakey.pem -out cacert.pem -config openssl.conf
+8. allow copy extensions
+9. openssl req -new -x509 -keyout cakey.pem -out cacert.pem -config openssl.conf
+
+https cert
+1. openssl req -new -config openssl.conf -keyout keys/key.pem -out csr/csr.pem -nodes -subj "/CN=domain.name/" -addext "subjectAltName=DNS:domain.name"
+2. openssl ca -config openssl.conf -in csr/csr.pem -out certs/cert.pem -nobatch
+
+subca cert
+1. openssl req -new -config openssl.conf -keyout keys/key.pem -out csr/csr.pem
+2. openssl ca -config openssl.conf -in csr/csr.pem -out certs/cert.pem -nobatch -extensions v3_ca
+3. cat ca
