@@ -44,4 +44,3 @@ https cert
 subca cert
 1. openssl req -new -config openssl.conf -keyout keys/key.pem -out csr/csr.pem
 2. openssl ca -config openssl.conf -in csr/csr.pem -out certs/cert.pem -nobatch -extensions v3_ca
-3. cat ca
