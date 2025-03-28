@@ -14,7 +14,8 @@
 commom-auth or fly-dm  
 `account requisite pam_time.so`  
 time.conf  
-*;*;!admin;Wk0800-1800  
+`*;*;!admin;Wk0800-1800`  
+/etc/X11/fly-dm/fly-dmrc GreetStrimg GreetFont
 
 # reserve  
 ```#!/bin/bash
