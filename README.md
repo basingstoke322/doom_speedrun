@@ -61,3 +61,14 @@ apt isntall lvm2 cryptsetup
 5. echo pass | cryptsetup open /dev/stripe_group/data_array crypto-folder --type plain
 6. mkfs.ext4 /dev/mapper/crypto-folder
 7. mount /dev/mapper/crypto-folder /crypto-folder
+
+# import users
+```
+import csv
+import subprocess
+
+with open('users.csv') as f:
+ reader = csv.reader(f, delimiter=";")
+ for row in reader:
+  subporcess.Popen(f"echo pass | ipa user-add {row[0]} --first={row[1]} --last={row[2]} --password")
+```
