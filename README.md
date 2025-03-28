@@ -80,5 +80,3 @@ The option -w|–http installs the certificate for the HTTP server, and -d|–di
 Then restart your daemons:  
 systemctl restart httpd.service  
 systemctl restart dirsrv@MY-REALM.service 
-
-    Сохраните изменения.
