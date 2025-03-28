@@ -58,3 +58,6 @@ apt isntall lvm2 cryptsetup
 2. pvcreate /dev/ram*
 3. vgcreate stripe_group dev/ram*
 4. lvcreate -i3 -l 100%VG -n data_array stripe_group
+5. echo pass | cryptsetup open /dev/stripe_group/data_array crypto-folder --type plain
+6. mkfs.ext4 /dev/mapper/crypto-folder
+7. mount /dev/mapper/crypto-folder /crypto-folder
