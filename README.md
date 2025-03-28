@@ -72,3 +72,13 @@ with open('users.csv') as f:
  for row in reader:
   subporcess.Popen(f"echo pass | ipa user-add {row[0]} --first={row[1]} --last={row[2]} --password")
 ```
+
+# freeipa custom cert
+ipa-server-certinstall -w -d mysite.key mysite.crt  
+The option -w|–http installs the certificate for the HTTP server, and -d|–dirsrv installs the certificate for the LDAP server. Please see ipa-server-certinstall(1) man page for more information regarding all the available options.  
+
+Then restart your daemons:  
+systemctl restart httpd.service  
+systemctl restart dirsrv@MY-REALM.service  
+
+
