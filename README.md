@@ -51,3 +51,10 @@ https cert
 subca cert
 1. openssl req -new -config openssl.conf -keyout keys/key.pem -out csr/csr.pem
 2. openssl ca -config openssl.conf -in csr/csr.pem -out certs/cert.pem -nobatch -extensions v3_ca
+
+# lvm
+apt isntall lvm2 cryptsetup
+1. modprobe brd rd_nr=3 rd_size=10485760 max_part=0
+2. pvcreate /dev/ram*
+3. vgcreate stripe_group dev/ram*
+4. lvcreate -i3 -l 100%VG -n data_array stripe_group
