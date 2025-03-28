@@ -79,59 +79,6 @@ The option -w|–http installs the certificate for the HTTP server, and -d|–di
 
 Then restart your daemons:  
 systemctl restart httpd.service  
-systemctl restart dirsrv@MY-REALM.service  
-
-# zabbix 
-Чтобы настроить метрики в Zabbix для выделения событий перегрузки CPU (>80%) и переполнения диска (>90%) в ленте событий, выполните следующие шаги:
-1. Создание триггеров
-Для CPU:
-
-    Перейдите в Configuration → Hosts.
-
-    Выберите нужный хост и перейдите в Triggers.
-
-    Нажмите Create trigger.
-
-    Заполните параметры:
-
-        Name: High CPU usage on {HOST.NAME}
-
-        Expression:
-        Copy
-
-        {HOSTNAME:system.cpu.util[,avg1].avg(5m)}>80
-
-        Severity: Выберите High или Disaster (для выделения в ленте).
-
-        Description: CPU usage exceeds 80% for 5 minutes.
-
-Для диска:
-
-    Аналогично создайте триггер:
-
-        Name: Disk space critically low on {HOST.NAME}: {ITEM.VALUE}% used
-
-        Expression:
-        Copy
-
-        {HOSTNAME:vfs.fs.size[/,pused].last()}>90
-
-        (Замените / на нужную файловую систему, если мониторится не корень).
-
-        Severity: High или Disaster.
-
-        Description: Disk usage exceeds 90%.
-
-2. Настройка отображения в ленте событий (Events)
-
-    Перейдите в Monitoring → Dashboard.
-
-    Добавьте виджет "Events" (если его нет).
-
-    Настройте фильтр виджета:
-
-        Trigger severity: Выберите High и Disaster.
-
-        Show: Problems (чтобы видеть только активные проблемы).
+systemctl restart dirsrv@MY-REALM.service 
 
     Сохраните изменения.
