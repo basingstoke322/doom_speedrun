@@ -80,3 +80,37 @@ The option -w|–http installs the certificate for the HTTP server, and -d|–di
 Then restart your daemons:  
 systemctl restart httpd.service  
 systemctl restart dirsrv@MY-REALM.service 
+
+# syslog
+/var/log/zabbix/zabbix_server.log  
+/var/log/postgresql/postgresql  
+
+source remote { file("/biba/boba.log"); };  
+destination d_net { tcp("192.168.1.1" port(1468) log_file_size(1000)); };  
+log { source(remote); destination(d_net); };  
+
+source s_net { tcp(ip(0.0.0.0) port(1468)); };  
+destination remote { file("/h/u/i"); };  
+log { source(s_net); destination(remote); };  
+
+# zabbix ssl
+vi /etc/nginx/conf.d/zabbix.conf  
+```
+server {
+listen 443 http2 ssl;
+listen [::]:443 http2 ssl;
+server_name <ip qddress>;
+ssl_certificate /etc/ssl/certs/zabbix.mycompany.internal.crt;
+ssl_certificate_key /etc/pki/tls/private/zabbix.mycompany.internal.key;
+ssl_dhparam /etc/ssl/certs/dhparam.pem;
+```
+To redirect traffic from port 80 to 443 we can add the following lines above our https block:
+```
+server {
+listen 80;
+server_name _; #dns or ip is also possible
+return 301 https://$host$request_uri;
+}
+```
+systemctl restart php-fpm.service  
+systemctl restart nginx  
